@@ -1,24 +1,32 @@
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useLoginModal from "@/hooks/useLoginModal";
 
 interface SidebarItemProps {
   label: string;
   href: string;
   icon: IconType;
   onClick?: () => void;
+  auth?: boolean;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ label, href, icon: Icon, onClick }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ label, href, icon: Icon, onClick, auth }) => {
+  const loginModal = useLoginModal();
+  const { data: currentUser } = useCurrentUser();
   const router = useRouter();
   const handleClick = useCallback(() => {
     if (onClick) {
       return onClick();
     }
-    if (href) {
+    // 유저가 로그인하지 않은 상태에서 사이드바 메뉴 (Notifications & Profile) 을 클릭했을때 '로그인 모달 팝업'
+    if (auth && !currentUser) {
+      loginModal.onOpen();
+    } else if (href) {
       router.push(href);
     }
-  }, [router, onClick, href]);
+  }, [router, onClick, href, currentUser, auth, loginModal]);
 
   return (
     <div onClick={handleClick} className="flex flex-row items-center">
