@@ -8,9 +8,6 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 
 const useFollow = (userId: string) => {
-  //   const url = userId ? `/api/posts?userId=${userId}` : "/api/posts/";
-
-  //   const { data, error, isLoading, mutate } = useSWR(url, fetcher);
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
 
   const { mutate: mutateFetchedUser } = useUser(userId);
@@ -32,9 +29,9 @@ const useFollow = (userId: string) => {
       let request;
 
       if (isFollowing) {
-        request = () => axios.delete("api/follow", { data: { userId } });
+        request = () => axios.delete("/api/follow", { data: { userId } });
       } else {
-        request = () => axios.post("api/follow", { userId });
+        request = () => axios.post("/api/follow", { userId });
       }
 
       await request();
@@ -42,7 +39,7 @@ const useFollow = (userId: string) => {
       mutateCurrentUser();
       mutateFetchedUser();
 
-      toast.success("Succcess");
+      toast.success("Success");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
