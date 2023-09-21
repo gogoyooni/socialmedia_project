@@ -40,7 +40,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           data: {
             body: `${currentUser?.username} replied your tweet!`,
             userId: post.userId,
-            postId: post.id,
           },
         });
 
