@@ -47,7 +47,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               // body: "Someone liked your tweet!",
               body: `${currentUser?.username} liked your tweet!`,
               userId: post.userId,
-              postId,
             },
           });
 

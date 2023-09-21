@@ -10,14 +10,12 @@ const NotificationsFeed = () => {
   const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { data: fetchedNotifications = [] } = useNotifications(currentUser?.id);
 
-  // console.log("notification::", fetchedNotifications);
-
-  const goToPost = useCallback(
-    (postId: string) => {
-      router.push(`/posts/${postId}`);
-    },
-    [router, fetchedNotifications.postId]
-  );
+  // const goToPost = useCallback(
+  //   (postId: string) => {
+  //     router.push(`/posts/${postId}`);
+  //   },
+  //   [router, fetchedNotifications.postId]
+  // );
 
   useEffect(() => {
     mutateCurrentUser();
@@ -31,7 +29,7 @@ const NotificationsFeed = () => {
     <div className="flex flex-col">
       {fetchedNotifications.map((notification: Record<string, any>) => (
         <div
-          onClick={() => goToPost(notification.postId)}
+          // onClick={() => goToPost(notification.postId)}
           key={notification.id}
           className="flex flex-row items-center p-6 gap-4 border-b-[1px] border-neutral-800 cursor-pointer hover:bg-neutral-900 transition"
         >
